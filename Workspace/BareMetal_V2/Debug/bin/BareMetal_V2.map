@@ -1,0 +1,336 @@
+Archive member included to satisfy reference by file (symbol)
+
+C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+                              ./Libc_Device_Support/syscalls.o (__errno)
+C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+                              C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o) (_impure_ptr)
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x00000000         0x00020000         xr
+RAM              0x20000000         0x00004000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD ./Application_Source/main.o
+LOAD ./Device_Drivers/GPIO/gpio.o
+LOAD ./Device_Drivers/GPIO2/gpio2.o
+LOAD ./Libc_Device_Support/malloc_support.o
+LOAD ./Libc_Device_Support/printf_support.o
+LOAD ./Libc_Device_Support/syscalls.o
+LOAD ./Special_Libraries/dsplib.o
+LOAD ./Startup/startup.o
+START GROUP
+LOAD C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libgcc.a
+LOAD C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a
+END GROUP
+START GROUP
+LOAD C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libgcc.a
+LOAD C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a
+LOAD C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libnosys.a
+END GROUP
+START GROUP
+LOAD C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libgcc.a
+LOAD C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a
+LOAD C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libnosys.a
+END GROUP
+                0x00000000                        __FLASH_START = 0x0
+                0x00020000                        __FLASH_SIZE = 0x20000
+                0x20000000                        __RAM_START = 0x20000000
+                0x00004000                        __RAM_SIZE = 0x4000
+                0x00000400                        __STACK_SIZE = 0x400
+                0x00000200                        __HEAP_SIZE = 0x200
+                0x20004000                        __STACK_START = (__RAM_START + __RAM_SIZE)
+                0x20003c00                        __STACK_END = (__STACK_START - __STACK_SIZE)
+                0x20003a00                        __HEAP_START = (__STACK_END - __HEAP_SIZE)
+                0x20003bea                        __HEAP_END = (__STACK_END - 0x16)
+
+.text           0x00000000      0x61c
+ *(.isr_vector)
+ .isr_vector    0x00000000       0xb0 ./Startup/startup.o
+                0x00000000                vector
+ *(.text*)
+ .text          0x000000b0       0xc8 ./Application_Source/main.o
+                0x000000b0                main
+                0x000000c0                Delay
+                0x000000fa                GPIO3_4_Init
+                0x00000130                GPIO3_4_Write_High
+                0x00000154                GPIO3_4_Write_Low
+ .text          0x00000178        0x0 ./Device_Drivers/GPIO/gpio.o
+ .text          0x00000178      0x1e4 ./Device_Drivers/GPIO2/gpio2.o
+                0x00000178                GPIO_write
+                0x000001a8                GPIO_Set
+                0x000001c4                GPIO_Clr
+                0x000001e0                GPIO_Inv
+                0x000001fc                gpio_init
+                0x00000250                GPIO_Pin_Init
+                0x00000294                GPIO_SetHSIOM
+                0x000002f4                GPIO_SetDrivemode
+ .text          0x0000035c        0xa ./Libc_Device_Support/malloc_support.o
+                0x0000035c                malloc_dummy
+ .text          0x00000366        0xa ./Libc_Device_Support/printf_support.o
+                0x00000366                printf_dummy
+ .text          0x00000370      0x24c ./Libc_Device_Support/syscalls.o
+                0x00000370                _getpid
+                0x0000037c                _kill
+                0x0000039c                _exit
+                0x000003b6                _read
+                0x000003f0                _write
+                0x00000428                _close
+                0x0000043c                _fstat
+                0x00000458                _isatty
+                0x0000046a                _lseek
+                0x00000480                _open
+                0x0000049c                _wait
+                0x000004ba                _unlink
+                0x000004d8                _times
+                0x000004ec                _stat
+                0x00000508                _link
+                0x00000528                _fork
+                0x00000540                _execve
+                0x00000562                _sbrk
+ .text          0x000005bc       0x14 ./Special_Libraries/dsplib.o
+                0x000005bc                ifx_sin
+                0x000005c6                ifx_cos
+ .text          0x000005d0       0x12 ./Startup/startup.o
+                0x000005d0                lpcomp_interrupt_IRQHandler
+                0x000005d0                tcpwm_interrupts_7_IRQHandler
+                0x000005d0                can_interrupt_can_IRQHandler
+                0x000005d0                SysTick_Handler
+                0x000005d0                PendSV_Handler
+                0x000005d0                NMI_Handler
+                0x000005d0                ioss_interrupts_gpio_1_IRQHandler
+                0x000005d0                cpuss_interrupt_dma_IRQHandler
+                0x000005d0                scb_4_interrupt_IRQHandler
+                0x000005d0                ioss_interrupts_gpio_2_IRQHandler
+                0x000005d0                scb_2_interrupt_IRQHandler
+                0x000005d0                tcpwm_interrupts_4_IRQHandler
+                0x000005d0                cpuss_interrupt_spcif_IRQHandler
+                0x000005d0                scb_0_interrupt_IRQHandler
+                0x000005d0                tcpwm_interrupts_3_IRQHandler
+                0x000005d0                csd_interrupt_IRQHandler
+                0x000005d0                tcpwm_interrupts_1_IRQHandler
+                0x000005d0                crypto_interrupt_IRQHandler
+                0x000005d0                tcpwm_interrupts_6_IRQHandler
+                0x000005d0                ioss_interrupt_gpio_IRQHandler
+                0x000005d0                scb_1_interrupt_IRQHandler
+                0x000005d0                Default_Handler
+                0x000005d0                scb_3_interrupt_IRQHandler
+                0x000005d0                ioss_interrupts_gpio_3_IRQHandler
+                0x000005d0                ioss_interrupts_gpio_0_IRQHandler
+                0x000005d0                tcpwm_interrupts_0_IRQHandler
+                0x000005d0                SVC_Handler
+                0x000005d0                tcpwm_interrupts_2_IRQHandler
+                0x000005d0                tcpwm_interrupts_5_IRQHandler
+                0x000005d0                srss_interrupt_wdt_IRQHandler
+                0x000005d0                pass_0_interrupt_ctbs_IRQHandler
+                0x000005d0                pass_0_interrupt_sar_IRQHandler
+                0x000005d0                wco_interrupt_IRQHandler
+                0x000005d8                HardFault_Handler
+ .text          0x000005e2        0x0 C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+ *fill*         0x000005e2        0x2 
+ .text.__errno  0x000005e4        0xc C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+                0x000005e4                __errno
+ .text          0x000005f0        0x0 C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+ *(.init*)
+ *(.fini*)
+                0x000005f0                        . = ALIGN (0x4)
+ *(.rodata .rodata.*)
+ .rodata        0x000005f0       0x2c ./Device_Drivers/GPIO2/gpio2.o
+                0x000005f0                LOOP_COUNT
+                0x000005f4                port_pattern
+                0x0000061c                        . = ALIGN (0x4)
+                0x0000061c                        __etext = .
+                0x000006a0                        _la_data = LOADADDR (.data)
+
+.glue_7         0x0000061c        0x0
+ .glue_7        0x0000061c        0x0 linker stubs
+
+.glue_7t        0x0000061c        0x0
+ .glue_7t       0x0000061c        0x0 linker stubs
+
+.vfp11_veneer   0x0000061c        0x0
+ .vfp11_veneer  0x0000061c        0x0 linker stubs
+
+.v4_bx          0x0000061c        0x0
+ .v4_bx         0x0000061c        0x0 linker stubs
+
+.iplt           0x0000061c        0x0
+ .iplt          0x0000061c        0x0 ./Application_Source/main.o
+
+.rand_vector    0x0000061c       0x84
+ .rand_vector   0x0000061c       0x84 ./Startup/startup.o
+                0x0000061c                Reset_handler
+
+.rel.dyn        0x000006a0        0x0
+ .rel.iplt      0x000006a0        0x0 ./Application_Source/main.o
+
+.data           0x20000000       0x7c load address 0x000006a0
+                0x20000000                        __data_start = .
+ *(.data*)
+ .data          0x20000000        0x0 ./Application_Source/main.o
+ .data          0x20000000        0x0 ./Device_Drivers/GPIO/gpio.o
+ .data          0x20000000       0x28 ./Device_Drivers/GPIO2/gpio2.o
+                0x20000000                bias_voltage
+ .data          0x20000028        0x0 ./Libc_Device_Support/malloc_support.o
+ .data          0x20000028        0x0 ./Libc_Device_Support/printf_support.o
+ .data          0x20000028        0x4 ./Libc_Device_Support/syscalls.o
+                0x20000028                environ
+ .data          0x2000002c        0x0 ./Special_Libraries/dsplib.o
+ .data          0x2000002c        0x0 ./Startup/startup.o
+ .data          0x2000002c        0x0 C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+ .data          0x2000002c        0x0 C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+ .data._impure_ptr
+                0x2000002c        0x4 C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+                0x2000002c                _impure_ptr
+ .data._impure_data
+                0x20000030       0x4c C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+                0x20000030                _impure_data
+                0x2000007c                        . = ALIGN (0x4)
+                0x2000007c                        __data_end = .
+
+.igot.plt       0x2000007c        0x0 load address 0x0000071c
+ .igot.plt      0x2000007c        0x0 ./Application_Source/main.o
+
+.bss            0x2000007c        0x8 load address 0x0000071c
+                0x2000007c                        __bss_start__ = .
+ *(.bss)
+ .bss           0x2000007c        0x0 ./Application_Source/main.o
+ .bss           0x2000007c        0x0 ./Device_Drivers/GPIO/gpio.o
+ .bss           0x2000007c        0x0 ./Device_Drivers/GPIO2/gpio2.o
+ .bss           0x2000007c        0x0 ./Libc_Device_Support/malloc_support.o
+ .bss           0x2000007c        0x0 ./Libc_Device_Support/printf_support.o
+ .bss           0x2000007c        0x8 ./Libc_Device_Support/syscalls.o
+                0x2000007c                __env
+ .bss           0x20000084        0x0 ./Special_Libraries/dsplib.o
+ .bss           0x20000084        0x0 ./Startup/startup.o
+ .bss           0x20000084        0x0 C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+ .bss           0x20000084        0x0 C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+ *(.bss.*)
+ *(COMMON)
+                0x20000084                        . = ALIGN (0x4)
+                0x20000084                        __bss_end__ = .
+                0x20000084                        . = ALIGN (0x4)
+
+Heap            0x20000084     0x397c load address 0x0000071c
+                0x20003a00                        . = ABSOLUTE (__HEAP_START)
+ *fill*         0x20000084     0x397c 
+ *(.heap)
+                0x20003a00                        . = ALIGN (0x4)
+                0x20003a00                        end = .
+                0x20003a00                        __end__ = .
+
+Stack           0x20003a00      0x200 load address 0x0000071c
+                0x20003c00                        . = ABSOLUTE (__STACK_END)
+ *fill*         0x20003a00      0x200 
+ *(.stack)
+OUTPUT(bin/BareMetal_V2.elf elf32-littlearm)
+LOAD linker stubs
+
+.debug_info     0x00000000     0x1044
+ .debug_info    0x00000000      0x167 ./Application_Source/main.o
+ .debug_info    0x00000167      0x58c ./Device_Drivers/GPIO2/gpio2.o
+ .debug_info    0x000006f3       0x39 ./Libc_Device_Support/malloc_support.o
+ .debug_info    0x0000072c       0x39 ./Libc_Device_Support/printf_support.o
+ .debug_info    0x00000765      0x6ff ./Libc_Device_Support/syscalls.o
+ .debug_info    0x00000e64       0x47 ./Special_Libraries/dsplib.o
+ .debug_info    0x00000eab      0x199 ./Startup/startup.o
+
+.debug_abbrev   0x00000000      0x53a
+ .debug_abbrev  0x00000000       0xc3 ./Application_Source/main.o
+ .debug_abbrev  0x000000c3      0x135 ./Device_Drivers/GPIO2/gpio2.o
+ .debug_abbrev  0x000001f8       0x2d ./Libc_Device_Support/malloc_support.o
+ .debug_abbrev  0x00000225       0x2d ./Libc_Device_Support/printf_support.o
+ .debug_abbrev  0x00000252      0x1b1 ./Libc_Device_Support/syscalls.o
+ .debug_abbrev  0x00000403       0x2f ./Special_Libraries/dsplib.o
+ .debug_abbrev  0x00000432      0x108 ./Startup/startup.o
+
+.debug_aranges  0x00000000       0xe8
+ .debug_aranges
+                0x00000000       0x20 ./Application_Source/main.o
+ .debug_aranges
+                0x00000020       0x20 ./Device_Drivers/GPIO2/gpio2.o
+ .debug_aranges
+                0x00000040       0x20 ./Libc_Device_Support/malloc_support.o
+ .debug_aranges
+                0x00000060       0x20 ./Libc_Device_Support/printf_support.o
+ .debug_aranges
+                0x00000080       0x20 ./Libc_Device_Support/syscalls.o
+ .debug_aranges
+                0x000000a0       0x20 ./Special_Libraries/dsplib.o
+ .debug_aranges
+                0x000000c0       0x28 ./Startup/startup.o
+
+.debug_line     0x00000000      0x8d1
+ .debug_line    0x00000000      0x18d ./Application_Source/main.o
+ .debug_line    0x0000018d        0x0 ./Device_Drivers/GPIO/gpio.o
+ .debug_line    0x0000018d      0x20e ./Device_Drivers/GPIO2/gpio2.o
+ .debug_line    0x0000039b       0x5a ./Libc_Device_Support/malloc_support.o
+ .debug_line    0x000003f5       0x5a ./Libc_Device_Support/printf_support.o
+ .debug_line    0x0000044f      0x29f ./Libc_Device_Support/syscalls.o
+ .debug_line    0x000006ee       0x56 ./Special_Libraries/dsplib.o
+ .debug_line    0x00000744      0x18d ./Startup/startup.o
+
+.debug_str      0x00000000      0x715
+ .debug_str     0x00000000      0x715 ./Application_Source/main.o
+                                0x1e4 (size before relaxing)
+ .debug_str     0x00000715       0xd1 ./Device_Drivers/GPIO/gpio.o
+ .debug_str     0x00000715      0x346 ./Device_Drivers/GPIO2/gpio2.o
+ .debug_str     0x00000715       0xe8 ./Libc_Device_Support/malloc_support.o
+ .debug_str     0x00000715       0xe8 ./Libc_Device_Support/printf_support.o
+ .debug_str     0x00000715      0x3e8 ./Libc_Device_Support/syscalls.o
+ .debug_str     0x00000715       0xe1 ./Special_Libraries/dsplib.o
+ .debug_str     0x00000715      0x1f8 ./Startup/startup.o
+
+.comment        0x00000000       0x45
+ .comment       0x00000000       0x45 ./Application_Source/main.o
+                                 0x46 (size before relaxing)
+ .comment       0x00000045       0x46 ./Device_Drivers/GPIO/gpio.o
+ .comment       0x00000045       0x46 ./Device_Drivers/GPIO2/gpio2.o
+ .comment       0x00000045       0x46 ./Libc_Device_Support/malloc_support.o
+ .comment       0x00000045       0x46 ./Libc_Device_Support/printf_support.o
+ .comment       0x00000045       0x46 ./Libc_Device_Support/syscalls.o
+ .comment       0x00000045       0x46 ./Special_Libraries/dsplib.o
+ .comment       0x00000045       0x46 ./Startup/startup.o
+
+.ARM.attributes
+                0x00000000       0x2c
+ .ARM.attributes
+                0x00000000       0x2c ./Application_Source/main.o
+ .ARM.attributes
+                0x0000002c       0x2c ./Device_Drivers/GPIO/gpio.o
+ .ARM.attributes
+                0x00000058       0x2c ./Device_Drivers/GPIO2/gpio2.o
+ .ARM.attributes
+                0x00000084       0x2c ./Libc_Device_Support/malloc_support.o
+ .ARM.attributes
+                0x000000b0       0x2c ./Libc_Device_Support/printf_support.o
+ .ARM.attributes
+                0x000000dc       0x2c ./Libc_Device_Support/syscalls.o
+ .ARM.attributes
+                0x00000108       0x2c ./Special_Libraries/dsplib.o
+ .ARM.attributes
+                0x00000134       0x2c ./Startup/startup.o
+ .ARM.attributes
+                0x00000160       0x2c C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+ .ARM.attributes
+                0x0000018c       0x2c C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+
+.debug_frame    0x00000000      0x52c
+ .debug_frame   0x00000000       0xac ./Application_Source/main.o
+ .debug_frame   0x000000ac      0x110 ./Device_Drivers/GPIO2/gpio2.o
+ .debug_frame   0x000001bc       0x2c ./Libc_Device_Support/malloc_support.o
+ .debug_frame   0x000001e8       0x2c ./Libc_Device_Support/printf_support.o
+ .debug_frame   0x00000214      0x248 ./Libc_Device_Support/syscalls.o
+ .debug_frame   0x0000045c       0x48 ./Special_Libraries/dsplib.o
+ .debug_frame   0x000004a4       0x68 ./Startup/startup.o
+ .debug_frame   0x0000050c       0x20 C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.3 rel1/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+
+.debug_rnglists
+                0x00000000       0x1a
+ .debug_rnglists
+                0x00000000       0x1a ./Startup/startup.o

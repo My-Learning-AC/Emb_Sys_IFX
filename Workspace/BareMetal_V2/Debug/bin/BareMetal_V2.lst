@@ -1,0 +1,1141 @@
+
+bin/BareMetal_V2.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000061c  00000000  00000000  00001000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .rand_vector  00000084  0000061c  0000061c  0000161c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .data         0000007c  20000000  000006a0  00002000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000008  2000007c  0000071c  0000207c  2**2
+                  ALLOC
+  4 Heap          0000397c  20000084  0000071c  00002084  2**0
+                  ALLOC
+  5 Stack         00000200  20003a00  0000071c  00002a00  2**0
+                  ALLOC
+  6 .debug_info   00001044  00000000  00000000  0000207c  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  7 .debug_abbrev 0000053a  00000000  00000000  000030c0  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  8 .debug_aranges 000000e8  00000000  00000000  000035fa  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  9 .debug_line   000008d1  00000000  00000000  000036e2  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 10 .debug_str    00000715  00000000  00000000  00003fb3  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 11 .comment      00000045  00000000  00000000  000046c8  2**0
+                  CONTENTS, READONLY
+ 12 .ARM.attributes 0000002c  00000000  00000000  0000470d  2**0
+                  CONTENTS, READONLY
+ 13 .debug_frame  0000052c  00000000  00000000  0000473c  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_rnglists 0000001a  00000000  00000000  00004c68  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .text:
+
+00000000 <vector>:
+   0:	00 40 00 20 1d 06 00 00 d1 05 00 00 d9 05 00 00     .@. ............
+	...
+  2c:	d1 05 00 00 00 00 00 00 00 00 00 00 d1 05 00 00     ................
+  3c:	d1 05 00 00 d1 05 00 00 d1 05 00 00 d1 05 00 00     ................
+  4c:	d1 05 00 00 d1 05 00 00 d1 05 00 00 d1 05 00 00     ................
+  5c:	d1 05 00 00 d1 05 00 00 d1 05 00 00 d1 05 00 00     ................
+  6c:	d1 05 00 00 d1 05 00 00 d1 05 00 00 d1 05 00 00     ................
+  7c:	d1 05 00 00 d1 05 00 00 d1 05 00 00 d1 05 00 00     ................
+  8c:	d1 05 00 00 d1 05 00 00 d1 05 00 00 d1 05 00 00     ................
+  9c:	d1 05 00 00 d1 05 00 00 d1 05 00 00 d1 05 00 00     ................
+  ac:	d1 05 00 00                                         ....
+
+000000b0 <main>:
+void GPIO3_4_Write_High(void);
+void GPIO3_4_Write_Low(void);
+
+
+int main()
+{
+  b0:	b580      	push	{r7, lr}
+  b2:	af00      	add	r7, sp, #0
+
+    GPIO3_4_Init();
+  b4:	f000 f821 	bl	fa <GPIO3_4_Init>
+
+    GPIO3_4_Write_High();
+  b8:	f000 f83a 	bl	130 <GPIO3_4_Write_High>
+
+    while(1)
+  bc:	46c0      	nop			@ (mov r8, r8)
+  be:	e7fd      	b.n	bc <main+0xc>
+
+000000c0 <Delay>:
+}
+
+
+
+void Delay(uint32_t delayNumber)
+{
+  c0:	b580      	push	{r7, lr}
+  c2:	b084      	sub	sp, #16
+  c4:	af00      	add	r7, sp, #0
+  c6:	6078      	str	r0, [r7, #4]
+    for(uint32_t i=0; i<delayNumber; i++);
+  c8:	2300      	movs	r3, #0
+  ca:	60fb      	str	r3, [r7, #12]
+  cc:	e002      	b.n	d4 <Delay+0x14>
+  ce:	68fb      	ldr	r3, [r7, #12]
+  d0:	3301      	adds	r3, #1
+  d2:	60fb      	str	r3, [r7, #12]
+  d4:	68fa      	ldr	r2, [r7, #12]
+  d6:	687b      	ldr	r3, [r7, #4]
+  d8:	429a      	cmp	r2, r3
+  da:	d3f8      	bcc.n	ce <Delay+0xe>
+    for(uint32_t i=0; i<delayNumber; i++);
+  dc:	2300      	movs	r3, #0
+  de:	60bb      	str	r3, [r7, #8]
+  e0:	e002      	b.n	e8 <Delay+0x28>
+  e2:	68bb      	ldr	r3, [r7, #8]
+  e4:	3301      	adds	r3, #1
+  e6:	60bb      	str	r3, [r7, #8]
+  e8:	68ba      	ldr	r2, [r7, #8]
+  ea:	687b      	ldr	r3, [r7, #4]
+  ec:	429a      	cmp	r2, r3
+  ee:	d3f8      	bcc.n	e2 <Delay+0x22>
+}
+  f0:	46c0      	nop			@ (mov r8, r8)
+  f2:	46c0      	nop			@ (mov r8, r8)
+  f4:	46bd      	mov	sp, r7
+  f6:	b004      	add	sp, #16
+  f8:	bd80      	pop	{r7, pc}
+
+000000fa <GPIO3_4_Init>:
+
+void GPIO3_4_Init(void)
+{
+  fa:	b580      	push	{r7, lr}
+  fc:	b082      	sub	sp, #8
+  fe:	af00      	add	r7, sp, #0
+    uint32_t *GPIO_PRT3_PC_REG      = (uint32_t *)GPIO_PRT3_PC;
+ 100:	4b09      	ldr	r3, [pc, #36]	@ (128 <GPIO3_4_Init+0x2e>)
+ 102:	607b      	str	r3, [r7, #4]
+    //uint32_t *HSIOM_PORT_SEL3_REG   = (uint32_t *)GPIO_PRT3_PC;
+
+    *GPIO_PRT3_PC_REG &= ~(7 << 12);  // Clearing the 4th bit field of PC Register
+ 104:	687b      	ldr	r3, [r7, #4]
+ 106:	681b      	ldr	r3, [r3, #0]
+ 108:	4a08      	ldr	r2, [pc, #32]	@ (12c <GPIO3_4_Init+0x32>)
+ 10a:	401a      	ands	r2, r3
+ 10c:	687b      	ldr	r3, [r7, #4]
+ 10e:	601a      	str	r2, [r3, #0]
+    *GPIO_PRT3_PC_REG |= (6 << 12);   // Setting the 4th bit field ad 6th Mode
+ 110:	687b      	ldr	r3, [r7, #4]
+ 112:	681b      	ldr	r3, [r3, #0]
+ 114:	22c0      	movs	r2, #192	@ 0xc0
+ 116:	01d2      	lsls	r2, r2, #7
+ 118:	431a      	orrs	r2, r3
+ 11a:	687b      	ldr	r3, [r7, #4]
+ 11c:	601a      	str	r2, [r3, #0]
+}
+ 11e:	46c0      	nop			@ (mov r8, r8)
+ 120:	46bd      	mov	sp, r7
+ 122:	b002      	add	sp, #8
+ 124:	bd80      	pop	{r7, pc}
+ 126:	46c0      	nop			@ (mov r8, r8)
+ 128:	40040308 	.word	0x40040308
+ 12c:	ffff8fff 	.word	0xffff8fff
+
+00000130 <GPIO3_4_Write_High>:
+
+void GPIO3_4_Write_High(void)
+{
+ 130:	b580      	push	{r7, lr}
+ 132:	b082      	sub	sp, #8
+ 134:	af00      	add	r7, sp, #0
+    uint32_t *GPIO_PRT3_DR_REG      = (uint32_t *)GPIO_PRT3_DR;
+ 136:	4b06      	ldr	r3, [pc, #24]	@ (150 <GPIO3_4_Write_High+0x20>)
+ 138:	607b      	str	r3, [r7, #4]
+    *GPIO_PRT3_DR_REG |= (1 << 4);   // Setting the 4th bit 
+ 13a:	687b      	ldr	r3, [r7, #4]
+ 13c:	681b      	ldr	r3, [r3, #0]
+ 13e:	2210      	movs	r2, #16
+ 140:	431a      	orrs	r2, r3
+ 142:	687b      	ldr	r3, [r7, #4]
+ 144:	601a      	str	r2, [r3, #0]
+}
+ 146:	46c0      	nop			@ (mov r8, r8)
+ 148:	46bd      	mov	sp, r7
+ 14a:	b002      	add	sp, #8
+ 14c:	bd80      	pop	{r7, pc}
+ 14e:	46c0      	nop			@ (mov r8, r8)
+ 150:	40040300 	.word	0x40040300
+
+00000154 <GPIO3_4_Write_Low>:
+
+void GPIO3_4_Write_Low(void)
+{
+ 154:	b580      	push	{r7, lr}
+ 156:	b082      	sub	sp, #8
+ 158:	af00      	add	r7, sp, #0
+    uint32_t *GPIO_PRT3_DR_REG      = (uint32_t *)GPIO_PRT3_DR;
+ 15a:	4b06      	ldr	r3, [pc, #24]	@ (174 <GPIO3_4_Write_Low+0x20>)
+ 15c:	607b      	str	r3, [r7, #4]
+    *GPIO_PRT3_DR_REG &= ~(1 << 4);   // Resetting the 4th bit
+ 15e:	687b      	ldr	r3, [r7, #4]
+ 160:	681b      	ldr	r3, [r3, #0]
+ 162:	2210      	movs	r2, #16
+ 164:	4393      	bics	r3, r2
+ 166:	001a      	movs	r2, r3
+ 168:	687b      	ldr	r3, [r7, #4]
+ 16a:	601a      	str	r2, [r3, #0]
+}
+ 16c:	46c0      	nop			@ (mov r8, r8)
+ 16e:	46bd      	mov	sp, r7
+ 170:	b002      	add	sp, #8
+ 172:	bd80      	pop	{r7, pc}
+ 174:	40040300 	.word	0x40040300
+
+00000178 <GPIO_write>:
+
+const int port_pattern[10] = {1,2,3,4,5,6,7,8,9,10};
+int   bias_voltage[10]     = {0,0,1,1,0,0,0,1,1,0};
+
+void GPIO_write(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)
+{
+ 178:	b580      	push	{r7, lr}
+ 17a:	b084      	sub	sp, #16
+ 17c:	af00      	add	r7, sp, #0
+ 17e:	60f8      	str	r0, [r7, #12]
+ 180:	60b9      	str	r1, [r7, #8]
+ 182:	607a      	str	r2, [r7, #4]
+    /* Thread-safe: Directly access the pin registers instead of base->OUT */
+    if(0UL == value)
+ 184:	687b      	ldr	r3, [r7, #4]
+ 186:	2b00      	cmp	r3, #0
+ 188:	d105      	bne.n	196 <GPIO_write+0x1e>
+    {
+        GPIO_PRT_OUT_CLR(base) = CY_GPIO_DR_MASK << pinNum;
+ 18a:	2201      	movs	r2, #1
+ 18c:	68bb      	ldr	r3, [r7, #8]
+ 18e:	409a      	lsls	r2, r3
+ 190:	68fb      	ldr	r3, [r7, #12]
+ 192:	645a      	str	r2, [r3, #68]	@ 0x44
+    }
+    else
+    {
+        GPIO_PRT_OUT_SET(base) = CY_GPIO_DR_MASK << pinNum;
+    }
+}
+ 194:	e004      	b.n	1a0 <GPIO_write+0x28>
+        GPIO_PRT_OUT_SET(base) = CY_GPIO_DR_MASK << pinNum;
+ 196:	2201      	movs	r2, #1
+ 198:	68bb      	ldr	r3, [r7, #8]
+ 19a:	409a      	lsls	r2, r3
+ 19c:	68fb      	ldr	r3, [r7, #12]
+ 19e:	641a      	str	r2, [r3, #64]	@ 0x40
+}
+ 1a0:	46c0      	nop			@ (mov r8, r8)
+ 1a2:	46bd      	mov	sp, r7
+ 1a4:	b004      	add	sp, #16
+ 1a6:	bd80      	pop	{r7, pc}
+
+000001a8 <GPIO_Set>:
+
+void GPIO_Set(GPIO_PRT_Type* base, uint32_t pinNum)
+{
+ 1a8:	b580      	push	{r7, lr}
+ 1aa:	b082      	sub	sp, #8
+ 1ac:	af00      	add	r7, sp, #0
+ 1ae:	6078      	str	r0, [r7, #4]
+ 1b0:	6039      	str	r1, [r7, #0]
+
+    GPIO_PRT_OUT_SET(base) = CY_GPIO_DR_MASK << pinNum;
+ 1b2:	2201      	movs	r2, #1
+ 1b4:	683b      	ldr	r3, [r7, #0]
+ 1b6:	409a      	lsls	r2, r3
+ 1b8:	687b      	ldr	r3, [r7, #4]
+ 1ba:	641a      	str	r2, [r3, #64]	@ 0x40
+}
+ 1bc:	46c0      	nop			@ (mov r8, r8)
+ 1be:	46bd      	mov	sp, r7
+ 1c0:	b002      	add	sp, #8
+ 1c2:	bd80      	pop	{r7, pc}
+
+000001c4 <GPIO_Clr>:
+
+void GPIO_Clr(GPIO_PRT_Type* base, uint32_t pinNum)
+{
+ 1c4:	b580      	push	{r7, lr}
+ 1c6:	b082      	sub	sp, #8
+ 1c8:	af00      	add	r7, sp, #0
+ 1ca:	6078      	str	r0, [r7, #4]
+ 1cc:	6039      	str	r1, [r7, #0]
+    GPIO_PRT_OUT_CLR(base) = CY_GPIO_DR_MASK << pinNum;
+ 1ce:	2201      	movs	r2, #1
+ 1d0:	683b      	ldr	r3, [r7, #0]
+ 1d2:	409a      	lsls	r2, r3
+ 1d4:	687b      	ldr	r3, [r7, #4]
+ 1d6:	645a      	str	r2, [r3, #68]	@ 0x44
+}
+ 1d8:	46c0      	nop			@ (mov r8, r8)
+ 1da:	46bd      	mov	sp, r7
+ 1dc:	b002      	add	sp, #8
+ 1de:	bd80      	pop	{r7, pc}
+
+000001e0 <GPIO_Inv>:
+
+void GPIO_Inv(GPIO_PRT_Type* base, uint32_t pinNum)
+{
+ 1e0:	b580      	push	{r7, lr}
+ 1e2:	b082      	sub	sp, #8
+ 1e4:	af00      	add	r7, sp, #0
+ 1e6:	6078      	str	r0, [r7, #4]
+ 1e8:	6039      	str	r1, [r7, #0]
+
+    GPIO_PRT_OUT_INV(base) = CY_GPIO_DR_MASK << pinNum;
+ 1ea:	2201      	movs	r2, #1
+ 1ec:	683b      	ldr	r3, [r7, #0]
+ 1ee:	409a      	lsls	r2, r3
+ 1f0:	687b      	ldr	r3, [r7, #4]
+ 1f2:	649a      	str	r2, [r3, #72]	@ 0x48
+}
+ 1f4:	46c0      	nop			@ (mov r8, r8)
+ 1f6:	46bd      	mov	sp, r7
+ 1f8:	b002      	add	sp, #8
+ 1fa:	bd80      	pop	{r7, pc}
+
+000001fc <gpio_init>:
+
+void gpio_init(GPIO_PRT_Type* base, const cy_stc_gpio_prt_config_t *config)
+{
+ 1fc:	b580      	push	{r7, lr}
+ 1fe:	b084      	sub	sp, #16
+ 200:	af00      	add	r7, sp, #0
+ 202:	6078      	str	r0, [r7, #4]
+ 204:	6039      	str	r1, [r7, #0]
+        uint32_t portNum;
+        HSIOM_PRT_Type* baseHSIOM;
+
+        portNum = ((uint32_t)(base) - 0x40040000UL) / 0x00000100UL;
+ 206:	687b      	ldr	r3, [r7, #4]
+ 208:	4a0f      	ldr	r2, [pc, #60]	@ (248 <__HEAP_SIZE+0x48>)
+ 20a:	4694      	mov	ip, r2
+ 20c:	4463      	add	r3, ip
+ 20e:	0a1b      	lsrs	r3, r3, #8
+ 210:	60fb      	str	r3, [r7, #12]
+        baseHSIOM = (HSIOM_PRT_Type*)(0x40020000UL + (0x00000100UL * portNum));
+ 212:	68fb      	ldr	r3, [r7, #12]
+ 214:	4a0d      	ldr	r2, [pc, #52]	@ (24c <__HEAP_SIZE+0x4c>)
+ 216:	4694      	mov	ip, r2
+ 218:	4463      	add	r3, ip
+ 21a:	021b      	lsls	r3, r3, #8
+ 21c:	60bb      	str	r3, [r7, #8]
+
+        (((GPIO_PRT_Type*)(base))->DR)              = config->dr;
+ 21e:	683b      	ldr	r3, [r7, #0]
+ 220:	681a      	ldr	r2, [r3, #0]
+ 222:	687b      	ldr	r3, [r7, #4]
+ 224:	601a      	str	r2, [r3, #0]
+        (((GPIO_PRT_Type*)(base))->PC)             = config->pc;
+ 226:	683b      	ldr	r3, [r7, #0]
+ 228:	689a      	ldr	r2, [r3, #8]
+ 22a:	687b      	ldr	r3, [r7, #4]
+ 22c:	609a      	str	r2, [r3, #8]
+        (((GPIO_PRT_Type*)(base))->PC2)             = config->pc2;
+ 22e:	683b      	ldr	r3, [r7, #0]
+ 230:	68da      	ldr	r2, [r3, #12]
+ 232:	687b      	ldr	r3, [r7, #4]
+ 234:	619a      	str	r2, [r3, #24]
+        (((HSIOM_PRT_Type *)(baseHSIOM))->PORT_SEL)  = config->selActive;
+ 236:	683b      	ldr	r3, [r7, #0]
+ 238:	691a      	ldr	r2, [r3, #16]
+ 23a:	68bb      	ldr	r3, [r7, #8]
+ 23c:	601a      	str	r2, [r3, #0]
+}
+ 23e:	46c0      	nop			@ (mov r8, r8)
+ 240:	46bd      	mov	sp, r7
+ 242:	b004      	add	sp, #16
+ 244:	bd80      	pop	{r7, pc}
+ 246:	46c0      	nop			@ (mov r8, r8)
+ 248:	bffc0000 	.word	0xbffc0000
+ 24c:	00400200 	.word	0x00400200
+
+00000250 <GPIO_Pin_Init>:
+
+void GPIO_Pin_Init(GPIO_PRT_Type *base, uint32_t pinNum, const cy_stc_gpio_pin_config_t *config, uint8_t hsiom)
+{
+ 250:	b580      	push	{r7, lr}
+ 252:	b084      	sub	sp, #16
+ 254:	af00      	add	r7, sp, #0
+ 256:	60f8      	str	r0, [r7, #12]
+ 258:	60b9      	str	r1, [r7, #8]
+ 25a:	607a      	str	r2, [r7, #4]
+ 25c:	001a      	movs	r2, r3
+ 25e:	1cfb      	adds	r3, r7, #3
+ 260:	701a      	strb	r2, [r3, #0]
+        GPIO_write(base, pinNum, config->outVal);
+ 262:	687b      	ldr	r3, [r7, #4]
+ 264:	681a      	ldr	r2, [r3, #0]
+ 266:	68b9      	ldr	r1, [r7, #8]
+ 268:	68fb      	ldr	r3, [r7, #12]
+ 26a:	0018      	movs	r0, r3
+ 26c:	f7ff ff84 	bl	178 <GPIO_write>
+        GPIO_SetDrivemode(base, pinNum, config->driveMode);
+ 270:	687b      	ldr	r3, [r7, #4]
+ 272:	685a      	ldr	r2, [r3, #4]
+ 274:	68b9      	ldr	r1, [r7, #8]
+ 276:	68fb      	ldr	r3, [r7, #12]
+ 278:	0018      	movs	r0, r3
+ 27a:	f000 f83b 	bl	2f4 <GPIO_SetDrivemode>
+        GPIO_SetHSIOM(base, pinNum, hsiom);
+ 27e:	1cfb      	adds	r3, r7, #3
+ 280:	781a      	ldrb	r2, [r3, #0]
+ 282:	68b9      	ldr	r1, [r7, #8]
+ 284:	68fb      	ldr	r3, [r7, #12]
+ 286:	0018      	movs	r0, r3
+ 288:	f000 f804 	bl	294 <GPIO_SetHSIOM>
+
+}
+ 28c:	46c0      	nop			@ (mov r8, r8)
+ 28e:	46bd      	mov	sp, r7
+ 290:	b004      	add	sp, #16
+ 292:	bd80      	pop	{r7, pc}
+
+00000294 <GPIO_SetHSIOM>:
+
+void GPIO_SetHSIOM(const GPIO_PRT_Type* base, uint32_t pinNum, uint8_t value)
+{
+ 294:	b580      	push	{r7, lr}
+ 296:	b088      	sub	sp, #32
+ 298:	af00      	add	r7, sp, #0
+ 29a:	60f8      	str	r0, [r7, #12]
+ 29c:	60b9      	str	r1, [r7, #8]
+ 29e:	1dfb      	adds	r3, r7, #7
+ 2a0:	701a      	strb	r2, [r3, #0]
+    uint32_t portNum;
+    uint32_t tempReg;
+    HSIOM_PRT_Type* portAddrHSIOM;
+
+    portNum = ((uint32_t)(base) - 0x40040000UL) / 0x00000100UL;
+ 2a2:	68fb      	ldr	r3, [r7, #12]
+ 2a4:	4a11      	ldr	r2, [pc, #68]	@ (2ec <GPIO_SetHSIOM+0x58>)
+ 2a6:	4694      	mov	ip, r2
+ 2a8:	4463      	add	r3, ip
+ 2aa:	0a1b      	lsrs	r3, r3, #8
+ 2ac:	61fb      	str	r3, [r7, #28]
+    portAddrHSIOM = (HSIOM_PRT_Type*)(0x40020000UL + (0x00000100UL * portNum));
+ 2ae:	69fb      	ldr	r3, [r7, #28]
+ 2b0:	4a0f      	ldr	r2, [pc, #60]	@ (2f0 <GPIO_SetHSIOM+0x5c>)
+ 2b2:	4694      	mov	ip, r2
+ 2b4:	4463      	add	r3, ip
+ 2b6:	021b      	lsls	r3, r3, #8
+ 2b8:	61bb      	str	r3, [r7, #24]
+
+    tempReg = (((HSIOM_PRT_Type *)(portAddrHSIOM))->PORT_SEL) & ~(CY_GPIO_HSIOM_MASK << (pinNum << CY_GPIO_HSIOM_OFFSET));
+ 2ba:	69bb      	ldr	r3, [r7, #24]
+ 2bc:	681b      	ldr	r3, [r3, #0]
+ 2be:	68ba      	ldr	r2, [r7, #8]
+ 2c0:	0092      	lsls	r2, r2, #2
+ 2c2:	210f      	movs	r1, #15
+ 2c4:	4091      	lsls	r1, r2
+ 2c6:	000a      	movs	r2, r1
+ 2c8:	43d2      	mvns	r2, r2
+ 2ca:	4013      	ands	r3, r2
+ 2cc:	617b      	str	r3, [r7, #20]
+    (((HSIOM_PRT_Type *)(portAddrHSIOM))->PORT_SEL) = tempReg | (( (uint32_t) value & CY_GPIO_HSIOM_MASK) << (pinNum << CY_GPIO_HSIOM_OFFSET));
+ 2ce:	1dfb      	adds	r3, r7, #7
+ 2d0:	781b      	ldrb	r3, [r3, #0]
+ 2d2:	220f      	movs	r2, #15
+ 2d4:	401a      	ands	r2, r3
+ 2d6:	68bb      	ldr	r3, [r7, #8]
+ 2d8:	009b      	lsls	r3, r3, #2
+ 2da:	409a      	lsls	r2, r3
+ 2dc:	697b      	ldr	r3, [r7, #20]
+ 2de:	431a      	orrs	r2, r3
+ 2e0:	69bb      	ldr	r3, [r7, #24]
+ 2e2:	601a      	str	r2, [r3, #0]
+}
+ 2e4:	46c0      	nop			@ (mov r8, r8)
+ 2e6:	46bd      	mov	sp, r7
+ 2e8:	b008      	add	sp, #32
+ 2ea:	bd80      	pop	{r7, pc}
+ 2ec:	bffc0000 	.word	0xbffc0000
+ 2f0:	00400200 	.word	0x00400200
+
+000002f4 <GPIO_SetDrivemode>:
+
+void GPIO_SetDrivemode(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)
+{
+ 2f4:	b580      	push	{r7, lr}
+ 2f6:	b086      	sub	sp, #24
+ 2f8:	af00      	add	r7, sp, #0
+ 2fa:	60f8      	str	r0, [r7, #12]
+ 2fc:	60b9      	str	r1, [r7, #8]
+ 2fe:	607a      	str	r2, [r7, #4]
+    uint32_t tempReg;
+    uint32_t pinLoc;
+
+    pinLoc = pinNum * CY_GPIO_DRIVE_MODE_OFFSET;
+ 300:	68ba      	ldr	r2, [r7, #8]
+ 302:	0013      	movs	r3, r2
+ 304:	005b      	lsls	r3, r3, #1
+ 306:	189b      	adds	r3, r3, r2
+ 308:	617b      	str	r3, [r7, #20]
+    tempReg = ((((GPIO_PRT_Type*)(base))->PC) & ~(CY_GPIO_PC_DM_MASK << pinLoc));
+ 30a:	68fb      	ldr	r3, [r7, #12]
+ 30c:	689b      	ldr	r3, [r3, #8]
+ 30e:	2107      	movs	r1, #7
+ 310:	697a      	ldr	r2, [r7, #20]
+ 312:	4091      	lsls	r1, r2
+ 314:	000a      	movs	r2, r1
+ 316:	43d2      	mvns	r2, r2
+ 318:	4013      	ands	r3, r2
+ 31a:	613b      	str	r3, [r7, #16]
+    (((GPIO_PRT_Type*)(base))->PC) = tempReg | ((value & CY_GPIO_PC_DM_MASK) << pinLoc);
+ 31c:	687b      	ldr	r3, [r7, #4]
+ 31e:	2207      	movs	r2, #7
+ 320:	401a      	ands	r2, r3
+ 322:	697b      	ldr	r3, [r7, #20]
+ 324:	409a      	lsls	r2, r3
+ 326:	693b      	ldr	r3, [r7, #16]
+ 328:	431a      	orrs	r2, r3
+ 32a:	68fb      	ldr	r3, [r7, #12]
+ 32c:	609a      	str	r2, [r3, #8]
+
+    tempReg = ((((GPIO_PRT_Type*)(base))->PC2) & ~(CY_GPIO_PC_DM_IBUF_MASK << pinNum));
+ 32e:	68fb      	ldr	r3, [r7, #12]
+ 330:	699b      	ldr	r3, [r3, #24]
+ 332:	2101      	movs	r1, #1
+ 334:	68ba      	ldr	r2, [r7, #8]
+ 336:	4091      	lsls	r1, r2
+ 338:	000a      	movs	r2, r1
+ 33a:	43d2      	mvns	r2, r2
+ 33c:	4013      	ands	r3, r2
+ 33e:	613b      	str	r3, [r7, #16]
+    (((GPIO_PRT_Type*)(base))->PC2) = tempReg | (((value & CY_GPIO_DM_VAL_IBUF_DISABLE_MASK) >> CY_GPIO_DRIVE_MODE_OFFSET) << pinNum);
+ 340:	687b      	ldr	r3, [r7, #4]
+ 342:	08db      	lsrs	r3, r3, #3
+ 344:	2201      	movs	r2, #1
+ 346:	401a      	ands	r2, r3
+ 348:	68bb      	ldr	r3, [r7, #8]
+ 34a:	409a      	lsls	r2, r3
+ 34c:	693b      	ldr	r3, [r7, #16]
+ 34e:	431a      	orrs	r2, r3
+ 350:	68fb      	ldr	r3, [r7, #12]
+ 352:	619a      	str	r2, [r3, #24]
+}
+ 354:	46c0      	nop			@ (mov r8, r8)
+ 356:	46bd      	mov	sp, r7
+ 358:	b006      	add	sp, #24
+ 35a:	bd80      	pop	{r7, pc}
+
+0000035c <malloc_dummy>:
+void malloc_dummy(void){}
+ 35c:	b580      	push	{r7, lr}
+ 35e:	af00      	add	r7, sp, #0
+ 360:	46c0      	nop			@ (mov r8, r8)
+ 362:	46bd      	mov	sp, r7
+ 364:	bd80      	pop	{r7, pc}
+
+00000366 <printf_dummy>:
+void printf_dummy(void){}
+ 366:	b580      	push	{r7, lr}
+ 368:	af00      	add	r7, sp, #0
+ 36a:	46c0      	nop			@ (mov r8, r8)
+ 36c:	46bd      	mov	sp, r7
+ 36e:	bd80      	pop	{r7, pc}
+
+00000370 <_getpid>:
+
+char *__env[1] = { 0 };
+char **environ = __env;
+
+int _getpid(void)
+{
+ 370:	b580      	push	{r7, lr}
+ 372:	af00      	add	r7, sp, #0
+	return 1;
+ 374:	2301      	movs	r3, #1
+}
+ 376:	0018      	movs	r0, r3
+ 378:	46bd      	mov	sp, r7
+ 37a:	bd80      	pop	{r7, pc}
+
+0000037c <_kill>:
+
+int _kill(int pid, int sig)
+{
+ 37c:	b580      	push	{r7, lr}
+ 37e:	b082      	sub	sp, #8
+ 380:	af00      	add	r7, sp, #0
+ 382:	6078      	str	r0, [r7, #4]
+ 384:	6039      	str	r1, [r7, #0]
+	errno = EINVAL;
+ 386:	f000 f92d 	bl	5e4 <__errno>
+ 38a:	0003      	movs	r3, r0
+ 38c:	2216      	movs	r2, #22
+ 38e:	601a      	str	r2, [r3, #0]
+	return -1;
+ 390:	2301      	movs	r3, #1
+ 392:	425b      	negs	r3, r3
+}
+ 394:	0018      	movs	r0, r3
+ 396:	46bd      	mov	sp, r7
+ 398:	b002      	add	sp, #8
+ 39a:	bd80      	pop	{r7, pc}
+
+0000039c <_exit>:
+
+void _exit (int status)
+{
+ 39c:	b580      	push	{r7, lr}
+ 39e:	b082      	sub	sp, #8
+ 3a0:	af00      	add	r7, sp, #0
+ 3a2:	6078      	str	r0, [r7, #4]
+	_kill(status, -1);
+ 3a4:	2301      	movs	r3, #1
+ 3a6:	425a      	negs	r2, r3
+ 3a8:	687b      	ldr	r3, [r7, #4]
+ 3aa:	0011      	movs	r1, r2
+ 3ac:	0018      	movs	r0, r3
+ 3ae:	f7ff ffe5 	bl	37c <_kill>
+	while (1) {}		/* Make sure we hang here */
+ 3b2:	46c0      	nop			@ (mov r8, r8)
+ 3b4:	e7fd      	b.n	3b2 <_exit+0x16>
+
+000003b6 <_read>:
+}
+
+__attribute__((weak)) int _read(int file, char *ptr, int len)
+{
+ 3b6:	b580      	push	{r7, lr}
+ 3b8:	b086      	sub	sp, #24
+ 3ba:	af00      	add	r7, sp, #0
+ 3bc:	60f8      	str	r0, [r7, #12]
+ 3be:	60b9      	str	r1, [r7, #8]
+ 3c0:	607a      	str	r2, [r7, #4]
+	int DataIdx;
+
+	for (DataIdx = 0; DataIdx < len; DataIdx++)
+ 3c2:	2300      	movs	r3, #0
+ 3c4:	617b      	str	r3, [r7, #20]
+ 3c6:	e00a      	b.n	3de <_read+0x28>
+	{
+		*ptr++ = __io_getchar();
+ 3c8:	e000      	b.n	3cc <_read+0x16>
+ 3ca:	bf00      	nop
+ 3cc:	0001      	movs	r1, r0
+ 3ce:	68bb      	ldr	r3, [r7, #8]
+ 3d0:	1c5a      	adds	r2, r3, #1
+ 3d2:	60ba      	str	r2, [r7, #8]
+ 3d4:	b2ca      	uxtb	r2, r1
+ 3d6:	701a      	strb	r2, [r3, #0]
+	for (DataIdx = 0; DataIdx < len; DataIdx++)
+ 3d8:	697b      	ldr	r3, [r7, #20]
+ 3da:	3301      	adds	r3, #1
+ 3dc:	617b      	str	r3, [r7, #20]
+ 3de:	697a      	ldr	r2, [r7, #20]
+ 3e0:	687b      	ldr	r3, [r7, #4]
+ 3e2:	429a      	cmp	r2, r3
+ 3e4:	dbf0      	blt.n	3c8 <_read+0x12>
+	}
+
+return len;
+ 3e6:	687b      	ldr	r3, [r7, #4]
+}
+ 3e8:	0018      	movs	r0, r3
+ 3ea:	46bd      	mov	sp, r7
+ 3ec:	b006      	add	sp, #24
+ 3ee:	bd80      	pop	{r7, pc}
+
+000003f0 <_write>:
+
+__attribute__((weak)) int _write(int file, char *ptr, int len)
+{
+ 3f0:	b580      	push	{r7, lr}
+ 3f2:	b086      	sub	sp, #24
+ 3f4:	af00      	add	r7, sp, #0
+ 3f6:	60f8      	str	r0, [r7, #12]
+ 3f8:	60b9      	str	r1, [r7, #8]
+ 3fa:	607a      	str	r2, [r7, #4]
+	int DataIdx;
+
+	for (DataIdx = 0; DataIdx < len; DataIdx++)
+ 3fc:	2300      	movs	r3, #0
+ 3fe:	617b      	str	r3, [r7, #20]
+ 400:	e009      	b.n	416 <__STACK_SIZE+0x16>
+	{
+		__io_putchar(*ptr++);
+ 402:	68bb      	ldr	r3, [r7, #8]
+ 404:	1c5a      	adds	r2, r3, #1
+ 406:	60ba      	str	r2, [r7, #8]
+ 408:	781b      	ldrb	r3, [r3, #0]
+ 40a:	0018      	movs	r0, r3
+ 40c:	e000      	b.n	410 <__STACK_SIZE+0x10>
+ 40e:	bf00      	nop
+	for (DataIdx = 0; DataIdx < len; DataIdx++)
+ 410:	697b      	ldr	r3, [r7, #20]
+ 412:	3301      	adds	r3, #1
+ 414:	617b      	str	r3, [r7, #20]
+ 416:	697a      	ldr	r2, [r7, #20]
+ 418:	687b      	ldr	r3, [r7, #4]
+ 41a:	429a      	cmp	r2, r3
+ 41c:	dbf1      	blt.n	402 <__STACK_SIZE+0x2>
+		//ITM_SendChar(*ptr++);
+	}
+	return len;
+ 41e:	687b      	ldr	r3, [r7, #4]
+}
+ 420:	0018      	movs	r0, r3
+ 422:	46bd      	mov	sp, r7
+ 424:	b006      	add	sp, #24
+ 426:	bd80      	pop	{r7, pc}
+
+00000428 <_close>:
+
+int _close(int file)
+{
+ 428:	b580      	push	{r7, lr}
+ 42a:	b082      	sub	sp, #8
+ 42c:	af00      	add	r7, sp, #0
+ 42e:	6078      	str	r0, [r7, #4]
+	return -1;
+ 430:	2301      	movs	r3, #1
+ 432:	425b      	negs	r3, r3
+}
+ 434:	0018      	movs	r0, r3
+ 436:	46bd      	mov	sp, r7
+ 438:	b002      	add	sp, #8
+ 43a:	bd80      	pop	{r7, pc}
+
+0000043c <_fstat>:
+
+
+int _fstat(int file, struct stat *st)
+{
+ 43c:	b580      	push	{r7, lr}
+ 43e:	b082      	sub	sp, #8
+ 440:	af00      	add	r7, sp, #0
+ 442:	6078      	str	r0, [r7, #4]
+ 444:	6039      	str	r1, [r7, #0]
+	st->st_mode = S_IFCHR;
+ 446:	683b      	ldr	r3, [r7, #0]
+ 448:	2280      	movs	r2, #128	@ 0x80
+ 44a:	0192      	lsls	r2, r2, #6
+ 44c:	605a      	str	r2, [r3, #4]
+	return 0;
+ 44e:	2300      	movs	r3, #0
+}
+ 450:	0018      	movs	r0, r3
+ 452:	46bd      	mov	sp, r7
+ 454:	b002      	add	sp, #8
+ 456:	bd80      	pop	{r7, pc}
+
+00000458 <_isatty>:
+
+int _isatty(int file)
+{
+ 458:	b580      	push	{r7, lr}
+ 45a:	b082      	sub	sp, #8
+ 45c:	af00      	add	r7, sp, #0
+ 45e:	6078      	str	r0, [r7, #4]
+	return 1;
+ 460:	2301      	movs	r3, #1
+}
+ 462:	0018      	movs	r0, r3
+ 464:	46bd      	mov	sp, r7
+ 466:	b002      	add	sp, #8
+ 468:	bd80      	pop	{r7, pc}
+
+0000046a <_lseek>:
+
+int _lseek(int file, int ptr, int dir)
+{
+ 46a:	b580      	push	{r7, lr}
+ 46c:	b084      	sub	sp, #16
+ 46e:	af00      	add	r7, sp, #0
+ 470:	60f8      	str	r0, [r7, #12]
+ 472:	60b9      	str	r1, [r7, #8]
+ 474:	607a      	str	r2, [r7, #4]
+	return 0;
+ 476:	2300      	movs	r3, #0
+}
+ 478:	0018      	movs	r0, r3
+ 47a:	46bd      	mov	sp, r7
+ 47c:	b004      	add	sp, #16
+ 47e:	bd80      	pop	{r7, pc}
+
+00000480 <_open>:
+
+int _open(char *path, int flags, ...)
+{
+ 480:	b40e      	push	{r1, r2, r3}
+ 482:	b580      	push	{r7, lr}
+ 484:	b083      	sub	sp, #12
+ 486:	af00      	add	r7, sp, #0
+ 488:	6078      	str	r0, [r7, #4]
+	/* Pretend like we always fail */
+	return -1;
+ 48a:	2301      	movs	r3, #1
+ 48c:	425b      	negs	r3, r3
+}
+ 48e:	0018      	movs	r0, r3
+ 490:	46bd      	mov	sp, r7
+ 492:	b003      	add	sp, #12
+ 494:	bc80      	pop	{r7}
+ 496:	bc08      	pop	{r3}
+ 498:	b003      	add	sp, #12
+ 49a:	4718      	bx	r3
+
+0000049c <_wait>:
+
+int _wait(int *status)
+{
+ 49c:	b580      	push	{r7, lr}
+ 49e:	b082      	sub	sp, #8
+ 4a0:	af00      	add	r7, sp, #0
+ 4a2:	6078      	str	r0, [r7, #4]
+	errno = ECHILD;
+ 4a4:	f000 f89e 	bl	5e4 <__errno>
+ 4a8:	0003      	movs	r3, r0
+ 4aa:	220a      	movs	r2, #10
+ 4ac:	601a      	str	r2, [r3, #0]
+	return -1;
+ 4ae:	2301      	movs	r3, #1
+ 4b0:	425b      	negs	r3, r3
+}
+ 4b2:	0018      	movs	r0, r3
+ 4b4:	46bd      	mov	sp, r7
+ 4b6:	b002      	add	sp, #8
+ 4b8:	bd80      	pop	{r7, pc}
+
+000004ba <_unlink>:
+
+int _unlink(char *name)
+{
+ 4ba:	b580      	push	{r7, lr}
+ 4bc:	b082      	sub	sp, #8
+ 4be:	af00      	add	r7, sp, #0
+ 4c0:	6078      	str	r0, [r7, #4]
+	errno = ENOENT;
+ 4c2:	f000 f88f 	bl	5e4 <__errno>
+ 4c6:	0003      	movs	r3, r0
+ 4c8:	2202      	movs	r2, #2
+ 4ca:	601a      	str	r2, [r3, #0]
+	return -1;
+ 4cc:	2301      	movs	r3, #1
+ 4ce:	425b      	negs	r3, r3
+}
+ 4d0:	0018      	movs	r0, r3
+ 4d2:	46bd      	mov	sp, r7
+ 4d4:	b002      	add	sp, #8
+ 4d6:	bd80      	pop	{r7, pc}
+
+000004d8 <_times>:
+
+int _times(struct tms *buf)
+{
+ 4d8:	b580      	push	{r7, lr}
+ 4da:	b082      	sub	sp, #8
+ 4dc:	af00      	add	r7, sp, #0
+ 4de:	6078      	str	r0, [r7, #4]
+	return -1;
+ 4e0:	2301      	movs	r3, #1
+ 4e2:	425b      	negs	r3, r3
+}
+ 4e4:	0018      	movs	r0, r3
+ 4e6:	46bd      	mov	sp, r7
+ 4e8:	b002      	add	sp, #8
+ 4ea:	bd80      	pop	{r7, pc}
+
+000004ec <_stat>:
+
+int _stat(char *file, struct stat *st)
+{
+ 4ec:	b580      	push	{r7, lr}
+ 4ee:	b082      	sub	sp, #8
+ 4f0:	af00      	add	r7, sp, #0
+ 4f2:	6078      	str	r0, [r7, #4]
+ 4f4:	6039      	str	r1, [r7, #0]
+	st->st_mode = S_IFCHR;
+ 4f6:	683b      	ldr	r3, [r7, #0]
+ 4f8:	2280      	movs	r2, #128	@ 0x80
+ 4fa:	0192      	lsls	r2, r2, #6
+ 4fc:	605a      	str	r2, [r3, #4]
+	return 0;
+ 4fe:	2300      	movs	r3, #0
+}
+ 500:	0018      	movs	r0, r3
+ 502:	46bd      	mov	sp, r7
+ 504:	b002      	add	sp, #8
+ 506:	bd80      	pop	{r7, pc}
+
+00000508 <_link>:
+
+int _link(char *old, char *new)
+{
+ 508:	b580      	push	{r7, lr}
+ 50a:	b082      	sub	sp, #8
+ 50c:	af00      	add	r7, sp, #0
+ 50e:	6078      	str	r0, [r7, #4]
+ 510:	6039      	str	r1, [r7, #0]
+	errno = EMLINK;
+ 512:	f000 f867 	bl	5e4 <__errno>
+ 516:	0003      	movs	r3, r0
+ 518:	221f      	movs	r2, #31
+ 51a:	601a      	str	r2, [r3, #0]
+	return -1;
+ 51c:	2301      	movs	r3, #1
+ 51e:	425b      	negs	r3, r3
+}
+ 520:	0018      	movs	r0, r3
+ 522:	46bd      	mov	sp, r7
+ 524:	b002      	add	sp, #8
+ 526:	bd80      	pop	{r7, pc}
+
+00000528 <_fork>:
+
+int _fork(void)
+{
+ 528:	b580      	push	{r7, lr}
+ 52a:	af00      	add	r7, sp, #0
+	errno = EAGAIN;
+ 52c:	f000 f85a 	bl	5e4 <__errno>
+ 530:	0003      	movs	r3, r0
+ 532:	220b      	movs	r2, #11
+ 534:	601a      	str	r2, [r3, #0]
+	return -1;
+ 536:	2301      	movs	r3, #1
+ 538:	425b      	negs	r3, r3
+}
+ 53a:	0018      	movs	r0, r3
+ 53c:	46bd      	mov	sp, r7
+ 53e:	bd80      	pop	{r7, pc}
+
+00000540 <_execve>:
+
+int _execve(char *name, char **argv, char **env)
+{
+ 540:	b580      	push	{r7, lr}
+ 542:	b084      	sub	sp, #16
+ 544:	af00      	add	r7, sp, #0
+ 546:	60f8      	str	r0, [r7, #12]
+ 548:	60b9      	str	r1, [r7, #8]
+ 54a:	607a      	str	r2, [r7, #4]
+	errno = ENOMEM;
+ 54c:	f000 f84a 	bl	5e4 <__errno>
+ 550:	0003      	movs	r3, r0
+ 552:	220c      	movs	r2, #12
+ 554:	601a      	str	r2, [r3, #0]
+	return -1;
+ 556:	2301      	movs	r3, #1
+ 558:	425b      	negs	r3, r3
+}
+ 55a:	0018      	movs	r0, r3
+ 55c:	46bd      	mov	sp, r7
+ 55e:	b004      	add	sp, #16
+ 560:	bd80      	pop	{r7, pc}
+
+00000562 <_sbrk>:
+/**
+ _sbrk
+ Increase program data space. Malloc and related functions depend on this
+**/
+caddr_t _sbrk(int incr)
+{
+ 562:	b580      	push	{r7, lr}
+ 564:	b084      	sub	sp, #16
+ 566:	af00      	add	r7, sp, #0
+ 568:	6078      	str	r0, [r7, #4]
+	extern char end asm("end");
+	static char *heap_end;
+	char *prev_heap_end;
+
+	if (heap_end == 0)
+ 56a:	4b12      	ldr	r3, [pc, #72]	@ (5b4 <_sbrk+0x52>)
+ 56c:	681b      	ldr	r3, [r3, #0]
+ 56e:	2b00      	cmp	r3, #0
+ 570:	d102      	bne.n	578 <_sbrk+0x16>
+		heap_end = &end;
+ 572:	4b10      	ldr	r3, [pc, #64]	@ (5b4 <_sbrk+0x52>)
+ 574:	4a10      	ldr	r2, [pc, #64]	@ (5b8 <_sbrk+0x56>)
+ 576:	601a      	str	r2, [r3, #0]
+
+	prev_heap_end = heap_end;
+ 578:	4b0e      	ldr	r3, [pc, #56]	@ (5b4 <_sbrk+0x52>)
+ 57a:	681b      	ldr	r3, [r3, #0]
+ 57c:	60fb      	str	r3, [r7, #12]
+	if (heap_end + incr > stack_ptr)
+ 57e:	4b0d      	ldr	r3, [pc, #52]	@ (5b4 <_sbrk+0x52>)
+ 580:	681a      	ldr	r2, [r3, #0]
+ 582:	687b      	ldr	r3, [r7, #4]
+ 584:	18d2      	adds	r2, r2, r3
+ 586:	466b      	mov	r3, sp
+ 588:	429a      	cmp	r2, r3
+ 58a:	d907      	bls.n	59c <_sbrk+0x3a>
+	{
+		errno = ENOMEM;
+ 58c:	f000 f82a 	bl	5e4 <__errno>
+ 590:	0003      	movs	r3, r0
+ 592:	220c      	movs	r2, #12
+ 594:	601a      	str	r2, [r3, #0]
+		return (caddr_t) -1;
+ 596:	2301      	movs	r3, #1
+ 598:	425b      	negs	r3, r3
+ 59a:	e006      	b.n	5aa <_sbrk+0x48>
+	}
+
+	heap_end += incr;
+ 59c:	4b05      	ldr	r3, [pc, #20]	@ (5b4 <_sbrk+0x52>)
+ 59e:	681a      	ldr	r2, [r3, #0]
+ 5a0:	687b      	ldr	r3, [r7, #4]
+ 5a2:	18d2      	adds	r2, r2, r3
+ 5a4:	4b03      	ldr	r3, [pc, #12]	@ (5b4 <_sbrk+0x52>)
+ 5a6:	601a      	str	r2, [r3, #0]
+
+	return (caddr_t) prev_heap_end;
+ 5a8:	68fb      	ldr	r3, [r7, #12]
+}
+ 5aa:	0018      	movs	r0, r3
+ 5ac:	46bd      	mov	sp, r7
+ 5ae:	b004      	add	sp, #16
+ 5b0:	bd80      	pop	{r7, pc}
+ 5b2:	46c0      	nop			@ (mov r8, r8)
+ 5b4:	20000080 	.word	0x20000080
+ 5b8:	20003a00 	.word	0x20003a00
+
+000005bc <ifx_sin>:
+void ifx_sin(void){}
+ 5bc:	b580      	push	{r7, lr}
+ 5be:	af00      	add	r7, sp, #0
+ 5c0:	46c0      	nop			@ (mov r8, r8)
+ 5c2:	46bd      	mov	sp, r7
+ 5c4:	bd80      	pop	{r7, pc}
+
+000005c6 <ifx_cos>:
+ 5c6:	b580      	push	{r7, lr}
+ 5c8:	af00      	add	r7, sp, #0
+ 5ca:	46c0      	nop			@ (mov r8, r8)
+ 5cc:	46bd      	mov	sp, r7
+ 5ce:	bd80      	pop	{r7, pc}
+
+000005d0 <Default_Handler>:
+
+/*----------------------------------------------------------------------------
+  Default Handler for Exceptions / Interrupts
+ *----------------------------------------------------------------------------*/
+void Default_Handler(void)
+{
+ 5d0:	b580      	push	{r7, lr}
+ 5d2:	af00      	add	r7, sp, #0
+    while(1);
+ 5d4:	46c0      	nop			@ (mov r8, r8)
+ 5d6:	e7fd      	b.n	5d4 <Default_Handler+0x4>
+
+000005d8 <HardFault_Handler>:
+
+/*----------------------------------------------------------------------------
+  Default Handler for Hard Fault
+ *----------------------------------------------------------------------------*/
+void HardFault_Handler(void)
+{
+ 5d8:	b580      	push	{r7, lr}
+ 5da:	af00      	add	r7, sp, #0
+    //Cy_SysLib_ProcessingFault();
+ 5dc:	46c0      	nop			@ (mov r8, r8)
+ 5de:	46bd      	mov	sp, r7
+ 5e0:	bd80      	pop	{r7, pc}
+	...
+
+000005e4 <__errno>:
+ 5e4:	4b01      	ldr	r3, [pc, #4]	@ (5ec <__errno+0x8>)
+ 5e6:	6818      	ldr	r0, [r3, #0]
+ 5e8:	4770      	bx	lr
+ 5ea:	46c0      	nop			@ (mov r8, r8)
+ 5ec:	2000002c 	.word	0x2000002c
+
+000005f0 <LOOP_COUNT>:
+ 5f0:	0000000a                                ....
+
+000005f4 <port_pattern>:
+ 5f4:	00000001 00000002 00000003 00000004     ................
+ 604:	00000005 00000006 00000007 00000008     ................
+ 614:	00000009 0000000a                       ........
+
+Disassembly of section .rand_vector:
+
+0000061c <Reset_handler>:
+{
+ 61c:	b580      	push	{r7, lr}
+ 61e:	b086      	sub	sp, #24
+ 620:	af00      	add	r7, sp, #0
+    uint32_t size = &__data_end - &__data_start;
+ 622:	4a1a      	ldr	r2, [pc, #104]	@ (68c <Reset_handler+0x70>)
+ 624:	4b1a      	ldr	r3, [pc, #104]	@ (690 <Reset_handler+0x74>)
+ 626:	1ad3      	subs	r3, r2, r3
+ 628:	109b      	asrs	r3, r3, #2
+ 62a:	607b      	str	r3, [r7, #4]
+    uint8_t *pDst = (uint8_t*)&__data_start;
+ 62c:	4b18      	ldr	r3, [pc, #96]	@ (690 <Reset_handler+0x74>)
+ 62e:	617b      	str	r3, [r7, #20]
+    uint8_t *pSrc = (uint8_t*)&_la_data;
+ 630:	4b18      	ldr	r3, [pc, #96]	@ (694 <Reset_handler+0x78>)
+ 632:	613b      	str	r3, [r7, #16]
+    for(uint32_t i = 0; i< size; i++)
+ 634:	2300      	movs	r3, #0
+ 636:	60fb      	str	r3, [r7, #12]
+ 638:	e00a      	b.n	650 <Reset_handler+0x34>
+        *pDst++ = *pSrc++;
+ 63a:	693a      	ldr	r2, [r7, #16]
+ 63c:	1c53      	adds	r3, r2, #1
+ 63e:	613b      	str	r3, [r7, #16]
+ 640:	697b      	ldr	r3, [r7, #20]
+ 642:	1c59      	adds	r1, r3, #1
+ 644:	6179      	str	r1, [r7, #20]
+ 646:	7812      	ldrb	r2, [r2, #0]
+ 648:	701a      	strb	r2, [r3, #0]
+    for(uint32_t i = 0; i< size; i++)
+ 64a:	68fb      	ldr	r3, [r7, #12]
+ 64c:	3301      	adds	r3, #1
+ 64e:	60fb      	str	r3, [r7, #12]
+ 650:	68fa      	ldr	r2, [r7, #12]
+ 652:	687b      	ldr	r3, [r7, #4]
+ 654:	429a      	cmp	r2, r3
+ 656:	d3f0      	bcc.n	63a <Reset_handler+0x1e>
+    size = (uint32_t)&__bss_end__- (uint32_t)&__bss_start__;
+ 658:	4a0f      	ldr	r2, [pc, #60]	@ (698 <Reset_handler+0x7c>)
+ 65a:	4b10      	ldr	r3, [pc, #64]	@ (69c <Reset_handler+0x80>)
+ 65c:	1ad3      	subs	r3, r2, r3
+ 65e:	607b      	str	r3, [r7, #4]
+    pDst = (uint8_t*)&__bss_start__;
+ 660:	4b0e      	ldr	r3, [pc, #56]	@ (69c <Reset_handler+0x80>)
+ 662:	617b      	str	r3, [r7, #20]
+    for(uint32_t i = 0; i< size; i++)
+ 664:	2300      	movs	r3, #0
+ 666:	60bb      	str	r3, [r7, #8]
+ 668:	e007      	b.n	67a <Reset_handler+0x5e>
+        *pDst++ = 0;
+ 66a:	697b      	ldr	r3, [r7, #20]
+ 66c:	1c5a      	adds	r2, r3, #1
+ 66e:	617a      	str	r2, [r7, #20]
+ 670:	2200      	movs	r2, #0
+ 672:	701a      	strb	r2, [r3, #0]
+    for(uint32_t i = 0; i< size; i++)
+ 674:	68bb      	ldr	r3, [r7, #8]
+ 676:	3301      	adds	r3, #1
+ 678:	60bb      	str	r3, [r7, #8]
+ 67a:	68ba      	ldr	r2, [r7, #8]
+ 67c:	687b      	ldr	r3, [r7, #4]
+ 67e:	429a      	cmp	r2, r3
+ 680:	d3f3      	bcc.n	66a <Reset_handler+0x4e>
+    main();
+ 682:	f7ff fd15 	bl	b0 <main>
+    while (1)
+ 686:	46c0      	nop			@ (mov r8, r8)
+ 688:	e7fd      	b.n	686 <Reset_handler+0x6a>
+ 68a:	46c0      	nop			@ (mov r8, r8)
+ 68c:	2000007c 	.word	0x2000007c
+ 690:	20000000 	.word	0x20000000
+ 694:	000006a0 	.word	0x000006a0
+ 698:	20000084 	.word	0x20000084
+ 69c:	2000007c 	.word	0x2000007c
